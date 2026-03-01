@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weather Forecast</title>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<!-- <script defer src="script.js"></script> -->
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="logo">WeatherFore</div>
+  
+  <ul class="nav-links">
+    <li><a href="#weather">Weather</a></li>
+    <li><a href="#forecast">Forecast</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  
+  <div class="dark-toggle" id="darkToggle">🌙</div>
+</nav>
+
+
+<!--  Weather Card  -->
+<section class="weather-section" id="weather">
+  
+  
+  <div class="search-box">
+    <input id="cityInput" placeholder="Enter Location..." />
+    <button id="searchBtn" type="button">🔍</button>
+    <button onclick="refreshWeather()" class="refresh-btn"><i class="fa-solid fa-rotate-right"></i></button>
+  </div>
+  
+  <div class="weather-card">
+    <h2 id="city">Bhubaneswar</h2>
+    <p class="date-time" id="dateTime">--</p>
+    <div class="temp" id="temp">--°C</div>
+    <p id="condition">Condition</p>
+
+    <div class="info">
+      <span>💧 Humidity <b id="humidity">--</b></span>
+      <span>🌬 Wind <b id="wind">--</b></span>
+    </div>
+  </div>
+</section>
+
+
+<!-- Forecast  -->
+<section class="forecast-section" id="forecast">
+  <h2>Next 5-Day</h2>
+  <div class="forecast-container" id="forecastContainer"></div>
+</section>
+
+<!-- About Us -->
+<section class="about-section" id="about">
+
+  <div class="about-container">
+
+    <h2>About WeatherFore</h2>
+
+    <p>
+      WeatherFore is a modern weather forecasting web application designed to
+      provide real-time weather updates and accurate 5-day forecasts for any
+      location worldwide. Our goal is to deliver fast, reliable, and visually
+      engaging weather information to help users plan their day better.
+    </p>
+
+    <div class="about-features">
+
+      <div class="about-card">
+        🌤 <h4>Real-Time Weather</h4>
+        <p>Instant temperature, humidity, and wind updates.</p>
+      </div>
+
+      <div class="about-card">
+        📅 <h4>5-Day Forecast</h4>
+        <p>Plan ahead with accurate weather predictions.</p>
+      </div>
+
+      <div class="about-card">
+        🌙 <h4>Dark Mode</h4>
+        <p>Comfortable viewing experience day and night.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section> 
+
+<!-- Reachout -->
+<section class="contact-section" id="contact">
+
+  <div class="contact-container">
+
+    <h2>Contact Us</h2>
+    <p class="contact-sub">For any query, Reach Out</p>
+
+    <!-- Contact Info -->
+    <div class="contact-info">
+
+      <p>📧 service@weatherfore.in</p>
+      <p>🌐 www.weatherfore.com</p>
+
+    </div>
+
+    <!-- Social Media -->
+    <h3>Follow Us on Social Media</h3>
+
+    <div class="social-icons">
+      <a href="https://www.instagram.com/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+      <a href="https://x.com/" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+    </div>
+
+    <!-- Community -->
+    <h3>For Quick Weather Updates, Join</h3>
+
+    <div class="community-icons">
+      <a href="https://web.whatsapp.com/" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="https://web.telegram.org/a/" target="_blank"><i class="fa-brands fa-telegram"></i></a>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  © 2026 WeatherFore | All Rights Reserved
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
