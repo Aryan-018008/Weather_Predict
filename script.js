@@ -5,7 +5,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 //Api Key
-// const apiKey = "cf33ca966c73286497b4c87abf545edf";
+const apiKey = "cf33ca966c73286497b4c87abf545edf";
 
 
 const temp = document.getElementById("temp");
