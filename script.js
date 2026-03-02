@@ -1,7 +1,6 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 //Api Key
-// const apiKey = "cf33ca966c73286497b4c87abf545edf";
 const apiKey = "6547f558fd8fc3553522ec45a5cfe7ee";
 
 
@@ -24,28 +23,47 @@ const darkToggle = document.getElementById("darkToggle");
 
 let currentCityId = null;
 
-/* fetch weather */
+//Fetch Weather// Heading
+
 
 async function fetchWeather(place) {
 
   try {
 
-    const currentRes = await fetch(
-     `https://api.openweathermap.org/data/2.5/weather?q=${place},IN&units=metric&appid=${apiKey}`
+    /* STEP 1 — GET EXACT LOCATION */
+    const geoRes = await fetch(
+      `https://api.openweathermap.org/geo/1.0/direct?q=${place},IN&limit=1&appid=${apiKey}`
     );
 
-    const currentData = await currentRes.json();
+    const geoData = await geoRes.json();
 
-    if (currentData.cod != 200) {
+    if (!geoData.length) {
       alert("City not found ❌");
       return;
     }
 
-    /* SAVE CITY ID */
-    currentCityId = currentData.id;
+    const { lat, lon, name, country } = geoData[0];
 
-    /* GET FORECAST */
-    await fetchWeatherById(currentCityId);
+    /* STEP 2 — WEATHER BY COORDINATES */
+    const currentRes = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`
+    );
+
+    const currentData = await currentRes.json();
+
+    /* STEP 3 — FORECAST */
+    const forecastRes = await fetch(
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`
+    );
+
+    const forecastData = await forecastRes.json();
+
+    /* FORCE DISPLAYED NAME (IMPORTANT) */
+    currentData.name = name;
+    currentData.sys.country = country;
+
+    displayWeather(currentData);
+    displayForecast(forecastData);
 
   } catch (error) {
     console.error(error);
@@ -54,7 +72,6 @@ async function fetchWeather(place) {
 }
 
 /* Fetch Weather By City */
-
 async function fetchWeatherById(id) {
 
   try {
@@ -80,28 +97,6 @@ async function fetchWeatherById(id) {
     console.error(error);
   }
 }
-// async function fetchWeather(place) {
-//   try {
-
-//     const res = await fetch(
-//       `/.netlify/functions/weather?city=${place}`
-//     );
-
-//     const data = await res.json();
-
-//     if (data.current.cod != 200) {
-//       alert("City not found ❌");
-//       return;
-//     }
-
-//     displayWeather(data.current);
-//     displayForecast(data.forecast);
-
-//   } catch (error) {
-//     console.error(error);
-//     alert("Network Error 🌐");
-//   }
-// }
 
 /* Display Current Weather */
 
@@ -179,17 +174,6 @@ cityInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") searchBtn.click();
 });
 
-/* ⭐ REFRESH BUTTON (NOW WORKS) */
-// refreshBtn.addEventListener("click", () => {
-
-//   if (!currentCityId) {
-//     alert("No city loaded yet");
-//     return;
-//   }
-
-//   console.log("Refreshing city:", currentCityId);
-//   fetchWeatherById(currentCityId);
-// });
 
 /* DARK MODE */
 darkToggle.addEventListener("click", () => {
