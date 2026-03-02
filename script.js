@@ -1,7 +1,8 @@
+
+
 document.addEventListener("DOMContentLoaded", () => {
 //Api Key
-const apiKey = "";
-
+// const apiKey = "";
 
 
 const temp = document.getElementById("temp");
@@ -28,32 +29,29 @@ let currentCityId = null;
 ============================== */
 
 async function fetchWeather(place) {
-
   try {
+    
+    const res = await fetch(`/.netlify/functions/weather?city=${place}`);
+    const data = await res.json();
 
-    const currentRes = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${place}&units=metric&appid=${apiKey}`
-    );
-
-    const currentData = await currentRes.json();
-
-    if (currentData.cod != 200) {
+    // Check if city not found
+    if (data.current.cod != 200) {
       alert("City not found ❌");
       return;
     }
 
-    /* SAVE CITY ID */
-    currentCityId = currentData.id;
+    // Save city ID
+    currentCityId = data.current.id;
 
-    /* GET FORECAST */
-    await fetchWeatherById(currentCityId);
+    // Display data
+    displayWeather(data.current);
+    displayForecast(data.forecast);
 
   } catch (error) {
     console.error(error);
     alert("Network Error 🌐");
   }
 }
-
 /* ==============================
    FETCH WEATHER BY CITY ID (⭐ FIX)
 ============================== */
