@@ -1,11 +1,8 @@
-// import { API_KEY } from './config';
-// fetch(`https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=Bhubaneswar`)
-//   .then(res => res.json())
-//   .then(data => console.log(data));
 
 document.addEventListener("DOMContentLoaded", () => {
 //Api Key
-const apiKey = "cf33ca966c73286497b4c87abf545edf";
+// const apiKey = "cf33ca966c73286497b4c87abf545edf";
+const apiKey = "6547f558fd8fc3553522ec45a5cfe7ee";
 
 
 const temp = document.getElementById("temp");
@@ -34,7 +31,7 @@ async function fetchWeather(place) {
   try {
 
     const currentRes = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${place}&units=metric&appid=${apiKey}`
+     `https://api.openweathermap.org/data/2.5/weather?q=${place},IN&units=metric&appid=${apiKey}`
     );
 
     const currentData = await currentRes.json();
@@ -56,20 +53,20 @@ async function fetchWeather(place) {
   }
 }
 
-/* ==============================
-   FETCH WEATHER BY CITY ID (⭐ FIX)
-============================== */
+/* Fetch Weather By City */
 
 async function fetchWeatherById(id) {
 
   try {
 
+    /* CURRENT WEATHER BY ID */
     const currentRes = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?id=${id}&units=metric&appid=${apiKey}`
     );
 
     const currentData = await currentRes.json();
 
+    /* FORECAST BY ID */
     const forecastRes = await fetch(
       `https://api.openweathermap.org/data/2.5/forecast?id=${id}&units=metric&appid=${apiKey}`
     );
@@ -83,6 +80,28 @@ async function fetchWeatherById(id) {
     console.error(error);
   }
 }
+// async function fetchWeather(place) {
+//   try {
+
+//     const res = await fetch(
+//       `/.netlify/functions/weather?city=${place}`
+//     );
+
+//     const data = await res.json();
+
+//     if (data.current.cod != 200) {
+//       alert("City not found ❌");
+//       return;
+//     }
+
+//     displayWeather(data.current);
+//     displayForecast(data.forecast);
+
+//   } catch (error) {
+//     console.error(error);
+//     alert("Network Error 🌐");
+//   }
+// }
 
 /* Display Current Weather */
 
