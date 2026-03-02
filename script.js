@@ -1,8 +1,11 @@
-
+// import { API_KEY } from './config';
+// fetch(`https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=Bhubaneswar`)
+//   .then(res => res.json())
+//   .then(data => console.log(data));
 
 document.addEventListener("DOMContentLoaded", () => {
 //Api Key
-// const apiKey = "";
+// const apiKey = "cf33ca966c73286497b4c87abf545edf";
 
 
 const temp = document.getElementById("temp");
@@ -24,34 +27,35 @@ const darkToggle = document.getElementById("darkToggle");
 
 let currentCityId = null;
 
-/* ==============================
-   FETCH WEATHER BY NAME
-============================== */
+/* fetch weather */
 
 async function fetchWeather(place) {
-  try {
-    
-    const res = await fetch(`/.netlify/functions/weather?city=${place}`);
-    const data = await res.json();
 
-    // Check if city not found
-    if (data.current.cod != 200) {
+  try {
+
+    const currentRes = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${place}&units=metric&appid=${apiKey}`
+    );
+
+    const currentData = await currentRes.json();
+
+    if (currentData.cod != 200) {
       alert("City not found ❌");
       return;
     }
 
-    // Save city ID
-    currentCityId = data.current.id;
+    /* SAVE CITY ID */
+    currentCityId = currentData.id;
 
-    // Display data
-    displayWeather(data.current);
-    displayForecast(data.forecast);
+    /* GET FORECAST */
+    await fetchWeatherById(currentCityId);
 
   } catch (error) {
     console.error(error);
     alert("Network Error 🌐");
   }
 }
+
 /* ==============================
    FETCH WEATHER BY CITY ID (⭐ FIX)
 ============================== */
@@ -80,9 +84,7 @@ async function fetchWeatherById(id) {
   }
 }
 
-/* ==============================
-   DISPLAY CURRENT WEATHER
-============================== */
+/* Display Current Weather */
 
 function displayWeather(data) {
 
@@ -95,9 +97,7 @@ function displayWeather(data) {
   changeBackground(data.weather[0].main);
 }
 
-/* ==============================
-   FORECAST
-============================== */
+/* forecast */
 
 function displayForecast(data) {
 
@@ -124,9 +124,7 @@ function displayForecast(data) {
   });
 }
 
-/* ==============================
-   BACKGROUND CHANGE
-============================== */
+/* Background Change */
 
 function changeBackground(weather) {
 
@@ -142,9 +140,7 @@ function changeBackground(weather) {
     document.body.classList.add("clear");
 }
 
-/* ==============================
-   EVENTS
-============================== */
+/* Events */
 
 /* SEARCH BUTTON */
 searchBtn.addEventListener("click", () => {
@@ -181,9 +177,7 @@ darkToggle.addEventListener("click", () => {
   document.body.classList.toggle("dark");
 });
 
-/* ==============================
-   DATE & TIME
-============================== */
+/* Date and Time*/
 
 function updateDateTime() {
 
@@ -208,9 +202,7 @@ function updateDateTime() {
 setInterval(updateDateTime, 1000);
 updateDateTime();
 
-/* ==============================
-   INITIAL LOAD
-============================== */
+/*Initial Reload */
 
 fetchWeather("Bhubaneswar");
 
